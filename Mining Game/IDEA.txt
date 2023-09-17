@@ -1,0 +1,7 @@
+A Mining Game
+	- 2D Top Down (Kinda Laike Duaphin)
+	- Procedually Generated World 
+	- No Player Sprite
+	- You Have To Create Your Own Mining Company With Mineshafts Fund Around the World
+	Ores
+		- Each Ore Has Different Machines THat Can Process it so a certain machine Level can only process an ore that is avalaible at that level and is processable by that machiene

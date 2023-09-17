@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://bg2fowibl7mmb"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_6qdly"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_2l8n6"]
+
+[node name="GameScene" type="Node3D"]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(0.738455, -0.331018, 0.587461, 0, 0.871214, 0.490904, -0.674302, -0.36251, 0.643352, 10.8225, 6.68296, 10.5022)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+
+[node name="Ground" type="Node3D" parent="."]
+transform = Transform3D(98.9638, 0, 0, 0, 1, 0, 0, 0, 64.2199, 0.00109005, -0.479093, -0.0055542)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Ground"]
+mesh = SubResource("BoxMesh_6qdly")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Ground"]
+shape = SubResource("BoxShape3D_2l8n6")

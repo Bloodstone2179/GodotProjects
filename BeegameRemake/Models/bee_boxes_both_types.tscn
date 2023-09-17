@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://c1ky5yun0pxtt"]
+
+[ext_resource type="Script" path="res://Models/beeBoxes.gd" id="1_h2dve"]
+[ext_resource type="Script" path="res://BeeBoxes.gd" id="2_n177a"]
+
+[node name="BeeBoxes_BothTypes"]
+script = ExtResource("1_h2dve")
+CollectionArray = []
+
+[node name="Bee Box Manager" type="Node" parent="." index="0"]
+script = ExtResource("2_n177a")

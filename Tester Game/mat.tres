@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" format=3 uid="uid://tphfxb4hyalk"]
+
+[resource]
+albedo_color = Color(0.607843, 0.443137, 0.686275, 1)
+ao_enabled = true
+ao_light_affect = 0.5
+heightmap_enabled = true
+heightmap_scale = 14.99
