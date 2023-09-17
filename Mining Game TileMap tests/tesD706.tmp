@@ -1,0 +1,48 @@
+[gd_scene load_steps=8 format=3 uid="uid://d0fl2f1qmny5i"]
+
+[ext_resource type="Texture2D" uid="uid://4fjhwg3b5q6l" path="res://SpriteSheet.png" id="1_gysjw"]
+[ext_resource type="Script" path="res://GenerateTiles.gd" id="2_j1xvp"]
+[ext_resource type="Script" path="res://CameraMovement.gd" id="2_peg4o"]
+[ext_resource type="Texture2D" uid="uid://by2sffwla00fl" path="res://PNG/Black Retina/crosshair003.png" id="3_4nboq"]
+[ext_resource type="PackedScene" uid="uid://bv0rws3c4e1lg" path="res://FpsUi.tscn" id="4_cr4m5"]
+
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6toeh"]
+texture = ExtResource("1_gysjw")
+texture_region_size = Vector2i(64, 64)
+0:0/0 = 0
+1:0/0 = 0
+0:1/0 = 0
+1:1/0 = 0
+
+[sub_resource type="TileSet" id="TileSet_uwqmb"]
+tile_size = Vector2i(64, 64)
+sources/0 = SubResource("TileSetAtlasSource_6toeh")
+
+[node name="TestingScene" type="Node2D"]
+
+[node name="TileMap" type="TileMap" parent="."]
+tile_set = SubResource("TileSet_uwqmb")
+cell_quadrant_size = 64
+format = 2
+script = ExtResource("2_j1xvp")
+MapWidth = 50
+MapHeight = 50
+firstRun = true
+mines2Make = 50
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(0.25, 0.25)
+script = ExtResource("2_peg4o")
+BasemoveAMT = 110
+moveAMT = 61
+Speed = 200
+
+[node name="Crosshair007" type="Sprite2D" parent="Camera2D"]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("3_4nboq")
+
+[node name="FPS UI" parent="Camera2D" instance=ExtResource("4_cr4m5")]
+offset_left = -627.0
+offset_top = -342.0
+offset_right = -627.0
+offset_bottom = -342.0
