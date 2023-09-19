@@ -4,8 +4,6 @@ extends Camera2D
 @export var moveAMT : int = 50
 @export var Speed : int = 100
 # Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
 
 # X = Left / Right
 # Y = Up / Down 
