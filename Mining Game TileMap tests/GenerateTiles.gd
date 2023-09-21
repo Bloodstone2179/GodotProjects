@@ -2,15 +2,14 @@ extends TileMap
 
 # TODO: Get All Tiles In A Radius
 
-@export var MapWidth = 100;
-@export var MapHeight = 100;
-@export var MapSize = MapWidth * MapHeight;
+const TILE_EMPTY = 0  # Tile index for an empty cell
+const TILE_MINE = 1  # Tile index for a mine
+@export var grid_size = Vector2i(10, 10)
 @export var firstRun : bool = false
 @export var PlacedMines : Array[Vector2i]
-@export var PlacedMines_testing : Array[Vector2i]
-@export var mines2Make = 10
+@export var mines2Make : int
 @export var Radius : int = 3
-
+var GridArray = []
 
 #func SetupMap_NoMods():
 #	print("Expected Mines %d" % ((MapSize/ 10) / MineDensityPer10Tiles))
@@ -25,54 +24,49 @@ extends TileMap
 
 
 func createBaseGrid():
-	for x in range( -(MapWidth / 2), (MapWidth / 2)):
-		for y in range(-(MapHeight / 2), (MapHeight / 2)):
-			set_cell( 0, Vector2i(x,y), 0, Vector2i(0,0), 0)
+	
+	for x in range( -(grid_size.x / 2), (grid_size.x / 2)):
+		var Row = []
+		for y in range(-(grid_size.y / 2), (grid_size.y / 2)):
+			Row.append(0)
+		GridArray.append(Row)
+	
 			
 func createMines():
-	#PickRandomSpotOnMap
-	var RandomSpot_X = randi_range(-(MapWidth / 2), (MapWidth / 2))
-	var RandomSpot_Y = randi_range(-(MapHeight / 2), (MapHeight / 2))
-	var RandomSpot = Vector2i(RandomSpot_X, RandomSpot_Y)
-	
-	
-	if firstRun == true:
+	var mines_placed = 0
+	while mines_placed < mines2Make:
+		var row = randi() % grid_size.y
+		var col = randi() % grid_size.x
+		if GridArray[row][col] == 0:
+			# Check the 3x3 radius
+			var valid_placement = true
+			for i in range(max(0, row - 1), min(grid_size.y, row + (Radius - 1))):
+				for j in range(max(0, col - 1), min(grid_size.x, col + (Radius - 1))):
+					if GridArray[i][j] == TILE_MINE:
+						valid_placement = false
+						break
+			
+			if valid_placement:
+				GridArray[row][col] = TILE_MINE
+				mines_placed += 1
 		
-		set_cell( 0, RandomSpot, 0, Vector2i(1,0), 0)
-		PlacedMines.append(RandomSpot)
-		PlacedMines_testing.append(RandomSpot)
-		firstRun = false
-	else:
-		if GetAllPointsAroundTile(RandomSpot) == true:
-			#set_cell( 0, Vector2i(RandomSpot_X,RandomSpot_Y), 0, Vector2i(1,1), 0)
-			PlacedMines.append(RandomSpot)
-			PlacedMines_testing.append(RandomSpot)
-		else:
-			createMines()
-func GetAllPointsAroundTile(spot : Vector2i):
-	var tempArrayForAmtCorrect = []
-	#Get Top Left Coord
-	# TODO: Iterate Over Row
-	var currentX
-	var currentY
-	var TopLeftCoord = Vector2i(spot.x - Radius, spot.y + Radius)
-	for y in range(TopLeftCoord.y, TopLeftCoord.y + (Radius * 2)):
-		currentY = y
-		for x in range(TopLeftCoord.x, TopLeftCoord.x + (Radius * 2)):
-			currentX = x
-			if PlacedMines.has(Vector2i(x,y)):
-				tempArrayForAmtCorrect.append(Vector2i(x,y))
-	if tempArrayForAmtCorrect.size() !=( (7 * 7 ) - 1):
-		set_cell( 0, Vector2i(currentX,currentY), 0, Vector2i(0,1), 0)
-		return true
-	else:
-		return false
-	
+func update_tilemap(grid):
+	# Clear existing tiles in the TileMap
+	clear()
+	# Update the TileMap with the generated grid
+	for row in range(grid_size.y):
+		for col in range(grid_size.x):
+			if grid[row][col] == TILE_MINE:
+				PlacedMines.append(Vector2i(col,row))
+				set_cell(0, Vector2i(col,row), 0, Vector2i(1,0), 0)  # Set the mine tile
+			else:
+				set_cell(0, Vector2i(col,row), 0, Vector2i(0,0), 0)  
+		
+
 func _ready():
 	createBaseGrid()
-	for i in range(0, mines2Make):
-		createMines()
-	print("SIZE" + str(PlacedMines_testing.size()))
+	createMines()
+	update_tilemap(GridArray)
 	#SetupMap_NoMods()
 	
 	

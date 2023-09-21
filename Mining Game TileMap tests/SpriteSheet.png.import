@@ -3,20 +3,19 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://4fjhwg3b5q6l"
-path.s3tc="res://.godot/imported/SpriteSheet.png-040ebba16d640fb7aff3b4a27f6593e2.s3tc.ctex"
+path="res://.godot/imported/SpriteSheet.png-040ebba16d640fb7aff3b4a27f6593e2.ctex"
 metadata={
-"imported_formats": ["s3tc_bptc"],
-"vram_texture": true
+"vram_texture": false
 }
 
 [deps]
 
 source_file="res://SpriteSheet.png"
-dest_files=["res://.godot/imported/SpriteSheet.png-040ebba16d640fb7aff3b4a27f6593e2.s3tc.ctex"]
+dest_files=["res://.godot/imported/SpriteSheet.png-040ebba16d640fb7aff3b4a27f6593e2.ctex"]
 
 [params]
 
-compress/mode=2
+compress/mode=0
 compress/high_quality=false
 compress/lossy_quality=0.7
 compress/hdr_compression=1

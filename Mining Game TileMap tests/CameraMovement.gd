@@ -3,6 +3,7 @@ extends Camera2D
 @export var BasemoveAMT : int = 50
 @export var moveAMT : int = 50
 @export var Speed : int = 100
+var tile_size = Vector2(64, 64)
 # Called when the node enters the scene tree for the first time.
 
 # X = Left / Right
@@ -22,4 +23,6 @@ func _physics_process(delta):
 		position.x += moveAMT * delta
 	if Input.is_action_pressed("left"):
 		position.x -= moveAMT * delta
+	
+		
 		
