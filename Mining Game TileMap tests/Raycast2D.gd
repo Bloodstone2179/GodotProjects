@@ -14,6 +14,7 @@ var TRACK_TOP_TO_LEFT = Vector2i(1,1)
 var TRACK_BOTTOM_RIGHT= Vector2i(0,2)
 var TRACK_BOTTOM_LEFT = Vector2i(1,2)
 var TRACK_CROSS_SECTION = Vector2i(1,2)
+var TrackTypes = [TRACK_TOP_TO_RIGHT, TRACK_TOP_TO_BOTTOM, TRACK_LEFT_RIGHT, TRACK_TOP_TO_LEFT, TRACK_BOTTOM_RIGHT, TRACK_BOTTOM_LEFT, TRACK_CROSS_SECTION]
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
@@ -43,13 +44,17 @@ func _physics_process(delta):
 		
 		#print(MapPositon)
 		if NoneDestructiveParts.has(tileMap.get_cell_atlas_coords(0, MapPositon)) == false and tileMap.get_cell_atlas_coords(0, MapPositon) != CurrentAtlasCoord_Placing:
+			
 			if MapPositon.x >= GridBounds.x and MapPositon.y >= GridBounds.y:
+				if TrackTypes.has(tileMap.get_cell_atlas_coords(0, MapPositon)):
+					BuildTileMap.append([MapPositon, tileMap.get_cell_atlas_coords(0, MapPositon)])	
 				
-				var prev = [MapPositon, tileMap.get_cell_atlas_coords(0, MapPositon)]
-				BuildTileMap.append(prev)
-				if MapPositon.x < previousTilePos.x or MapPositon.x > previousTilePos.x :
+				if MapPositon.x < previousTilePos.x or MapPositon.x > previousTilePos.x : # Placing a X axis tile
+					#Checking If previous tile a was a down tile
+					if tileMap.get_cell_atlas_coords(0, previousTilePos) == TRACK_TOP_TO_BOTTOM and tileMap.get_cell_atlas_coords(0, Vector2i(previousTilePos.x, previousTilePos.y - 1)) != TRACK_TOP_TO_BOTTOM:
+						tileMap.set_cell(0, MapPositon, 0, TRACK_TOP_TO_RIGHT)
 					tileMap.set_cell(0, MapPositon, 0, TRACK_LEFT_RIGHT)
-				if  MapPositon.y < previousTilePos.y or MapPositon.y > previousTilePos.y:
+				if  MapPositon.y < previousTilePos.y or MapPositon.y > previousTilePos.y:# Placing a Y axis tile
 					tileMap.set_cell(0, MapPositon, 0, TRACK_TOP_TO_BOTTOM)
 				previousTilePos = MapPositon
 		# Get the mouse position in screen coordinates
