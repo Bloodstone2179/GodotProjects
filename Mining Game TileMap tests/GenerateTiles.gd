@@ -6,9 +6,11 @@ const TILE_EMPTY = 0  # Tile index for an empty cell
 const TILE_MINE = 1  # Tile index for a mine
 @export var grid_size = Vector2i(10, 10)
 @export var firstRun : bool = false
+
 @export var PlacedMines : Array[Vector2i]
 @export var mines2Make : int
 @export var Radius : int = 3
+
 var GridArray = []
 
 #func SetupMap_NoMods():
